@@ -8,6 +8,13 @@
 
     <div class="row">
         <div class="col-md-12">
+            <form action="{{ route('posts.index')}}" method="GET">
+                <div class="form-group">
+                    <input type="text" name="search" placeholder="Search" class="form-control" value="@if($search) {{ $search }} @endif">
+                </div>
+                <button class="btn btn-success">Search</button>
+            </form>
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -39,6 +46,9 @@
 
                 </tbody>
             </table>
+            <hr>
+            {!! $posts->render() !!}
+            <hr>
 
             <a class="btn btn-success" href="{{ route('posts.create') }}">Create</a>
         </div>

@@ -9,7 +9,7 @@ class PostTableSeeder extends Seeder {
 
     public function run()
     {
-        // TestDummy::times(20)->create('App\Post');
+        factory(App\Post::class, 20)->create();
     }
 
 }

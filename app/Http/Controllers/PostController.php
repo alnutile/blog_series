@@ -9,16 +9,33 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller {
 
+	public function __construct()
+	{
+		$this->middleware('auth', ['except' => ['index', 'show']]);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$posts = Post::all();
+		$search = '';
 
-		return view('posts.index', compact('posts'));
+		if($search = $request->input('search'))
+		{
+			$posts = Post::where('title', "LIKE", "%" . $search . "%")->orWhere('body', "LIKE", "%" . $search . "%")->paginate(10);
+
+		}
+		else
+		{
+			$posts = Post::paginate(10);
+		}
+
+
+
+		return view('posts.index', compact('posts', 'search'));
 	}
 
 	/**
